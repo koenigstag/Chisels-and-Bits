@@ -7,7 +7,7 @@ import mod.chiselsandbits.api.plugin.IChiselsAndBitsPlugin;
 import mod.chiselsandbits.block.ChiseledBlock;
 import mod.chiselsandbits.registrars.ModBlocks;
 
-@ChiselsAndBitsPlugin(requiredMods = "create", isExperimental = true)
+@ChiselsAndBitsPlugin(requiredMods = "create")
 public class CreateCandBPlugin implements IChiselsAndBitsPlugin {
     @Override
     public String getId() {
