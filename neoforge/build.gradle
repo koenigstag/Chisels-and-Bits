@@ -13,9 +13,17 @@ sourceSets {
     }
 }
 
+configurations.jarJar.attributes { AttributeContainer attributes ->
+    attributes.attribute(Usage.USAGE_ATTRIBUTE, project.objects.named(Usage, "java-runtime"))
+}
 configurations.create("includedLibraries")
 configurations.implementation.extendsFrom configurations.includedLibraries
 configurations.includedLibraries.transitive false
+configurations.includedLibraries.attributes { AttributeContainer attributes ->
+    attributes.attribute(Usage.USAGE_ATTRIBUTE, project.objects.named(Usage, "java-runtime"))
+}
+
+configurations.jarJar.shouldResolveConsistentlyWith(configurations.runtimeClasspath)
 
 def libraryConfigs = new HashSet<org.gradle.api.artifacts.Configuration>();
 configurations { configContainer ->
@@ -27,6 +35,8 @@ configurations { configContainer ->
         def implementationConfig = configContainer.maybeCreate(implementationConfigName)
 
         implementationConfig.extendsFrom libraryConfig
+
+        configContainer.includedLibraries.extendsFrom libraryConfig
 
         libraryConfigs.add(libraryConfig);
     }
@@ -43,7 +53,6 @@ subsystems {
 }
 
 project.minecraft.accessTransformers.file project(':common').file("accesstransformer.cfg")
-
 
 project.dependencies.implementation "net.neoforged:neoforge:${project.forgeVersion}"
 project.dependencies.includedLibraries ("com.communi-suggestu.scena:scena-neoforge:${project.scenaVersion}") {
@@ -88,10 +97,7 @@ project.runs {
     }
 }
 
-tasks.jarJar.configuration project.configurations.includedLibraries
-libraryConfigs.each { config ->
-    tasks.jarJar.configuration config
-}
+configurations.jarJar.extendsFrom configurations.includedLibraries
 tasks.jarJar.archiveClassifier.set("")
 tasks.jar.archiveClassifier.set("slim")
 tasks.assemble.dependsOn tasks.jarJar
