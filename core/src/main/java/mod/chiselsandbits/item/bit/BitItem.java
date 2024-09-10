@@ -27,6 +27,7 @@ import mod.chiselsandbits.api.variant.state.IStateVariantManager;
 import mod.chiselsandbits.blockinformation.BlockInformation;
 import mod.chiselsandbits.chiseling.ChiselingManager;
 import mod.chiselsandbits.client.render.ModRenderTypes;
+import mod.chiselsandbits.item.ChiselItem;
 import mod.chiselsandbits.registrars.ModCreativeTabs;
 import mod.chiselsandbits.utils.ItemStackUtils;
 import mod.chiselsandbits.utils.TranslationUtils;
@@ -236,8 +237,10 @@ public class BitItem extends Item implements IChiselingItem, IBitItem, IDocument
       final ChiselingOperation modeOfOperation,
       final ChiselModeInteractionCallback callback)
     {
+        final InteractionHand otherHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         final ItemStack itemStack = playerEntity.getItemInHand(hand);
-        if (itemStack.isEmpty() || itemStack.getItem() != this)
+        final ItemStack otherItemStack = playerEntity.getItemInHand(otherHand);
+        if (itemStack.isEmpty() || itemStack.getItem() != this || otherItemStack.getItem() != ChiselItem)
             return currentState;
 
         final IChiselingItem chiselingItem = (IChiselingItem) itemStack.getItem();
