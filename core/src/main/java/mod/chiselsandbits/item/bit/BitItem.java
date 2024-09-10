@@ -237,10 +237,10 @@ public class BitItem extends Item implements IChiselingItem, IBitItem, IDocument
       final ChiselingOperation modeOfOperation,
       final ChiselModeInteractionCallback callback)
     {
-        final InteractionHand otherHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         final ItemStack itemStack = playerEntity.getItemInHand(hand);
-        final ItemStack otherItemStack = playerEntity.getItemInHand(otherHand);
-        if (itemStack.isEmpty() || itemStack.getItem() != this || otherItemStack.getItem() != ChiselItem)
+        final ItemStack offhandItemStack = playerEntity.getItemInHand(InteractionHand.OFF_HAND);
+
+        if (itemStack.isEmpty() || itemStack.getItem() != this || (modeOfOperation == ChiselingOperation.CHISELING && offhandItemStack.getItem() != ChiselItem)
             return currentState;
 
         final IChiselingItem chiselingItem = (IChiselingItem) itemStack.getItem();
