@@ -20,6 +20,7 @@ import mod.chiselsandbits.chiseling.ChiselingManager;
 import mod.chiselsandbits.chiseling.LocalChiselingContextCache;
 import mod.chiselsandbits.api.util.constants.Constants;
 import mod.chiselsandbits.registrars.ModTags;
+import mod.chiselsandbits.utils.FluidUtils;
 import mod.chiselsandbits.utils.ItemStackUtils;
 import mod.chiselsandbits.utils.TranslationUtils;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -151,6 +152,12 @@ public class ChiselItem extends DiggerItem implements IChiselItem, IDynamicallyH
     {
         final ItemStack itemStack = playerEntity.getItemInHand(hand);
         if (itemStack.isEmpty() || itemStack.getItem() != this)
+        {
+            return currentState;
+        }
+
+        // skip if block is fluid
+        if (FluidUtils.isPlayerFacingFluidBlock(playerEntity))
         {
             return currentState;
         }

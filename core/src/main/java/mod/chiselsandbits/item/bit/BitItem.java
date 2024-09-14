@@ -29,6 +29,7 @@ import mod.chiselsandbits.chiseling.ChiselingManager;
 import mod.chiselsandbits.client.render.ModRenderTypes;
 import mod.chiselsandbits.item.ChiselItem;
 import mod.chiselsandbits.registrars.ModCreativeTabs;
+import mod.chiselsandbits.utils.FluidUtils;
 import mod.chiselsandbits.utils.ItemStackUtils;
 import mod.chiselsandbits.utils.TranslationUtils;
 import net.minecraft.client.Minecraft;
@@ -242,6 +243,13 @@ public class BitItem extends Item implements IChiselingItem, IBitItem, IDocument
 
         if (itemStack.isEmpty() || itemStack.getItem() != this || (modeOfOperation == ChiselingOperation.CHISELING && !(offhandItemStack.getItem() instanceof ChiselItem)))
             return currentState;
+
+        // skip if block is fluid
+        if (FluidUtils.isPlayerFacingFluidBlock(playerEntity))
+        {
+            // player can not place bits on fluid blocks or break fluid blocks
+            return currentState;
+        }
 
         final IChiselingItem chiselingItem = (IChiselingItem) itemStack.getItem();
         final IChiselMode chiselMode = chiselingItem.getMode(itemStack);
