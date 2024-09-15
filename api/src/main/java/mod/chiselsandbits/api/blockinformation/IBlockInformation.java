@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 
 import java.util.Optional;
 
@@ -26,6 +27,8 @@ public interface IBlockInformation extends INBTSerializable<CompoundTag>, IPacke
     }
 
     BlockState getBlockState();
+
+    FluidState getFluidState();
 
     Optional<IStateVariant> getVariant();
 

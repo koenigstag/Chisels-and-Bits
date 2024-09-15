@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +45,19 @@ public final class ModTags
         private static TagKey<Block> tag(String name)
         {
             return TagKey.create(Registries.BLOCK, new ResourceLocation(Constants.MOD_ID, name));
+        }
+    }
+
+    public static final class Fluids
+    {
+        public static TagKey<Fluid> FORCED_CHISELABLE_FLUIDS  = tag("chiselable/forced-fluids");
+        public static TagKey<Fluid> BLOCKED_CHISELABLE_FLUIDS = tag("chiselable/blocked-fluids");
+
+        private static void init() {}
+
+        private static TagKey<Fluid> tag(String name)
+        {
+            return TagKey.create(Registries.FLUID, new ResourceLocation(Constants.MOD_ID, name));
         }
     }
 

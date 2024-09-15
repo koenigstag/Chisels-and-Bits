@@ -244,13 +244,6 @@ public class BitItem extends Item implements IChiselingItem, IBitItem, IDocument
         if (itemStack.isEmpty() || itemStack.getItem() != this || (modeOfOperation == ChiselingOperation.CHISELING && !(offhandItemStack.getItem() instanceof ChiselItem)))
             return currentState;
 
-        // skip if block is fluid
-        if (FluidUtils.isPlayerFacingFluidBlock(playerEntity))
-        {
-            // player can not place bits on fluid blocks or break fluid blocks
-            return currentState;
-        }
-
         final IChiselingItem chiselingItem = (IChiselingItem) itemStack.getItem();
         final IChiselMode chiselMode = chiselingItem.getMode(itemStack);
 

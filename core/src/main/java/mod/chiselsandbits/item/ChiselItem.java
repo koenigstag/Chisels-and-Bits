@@ -156,12 +156,6 @@ public class ChiselItem extends DiggerItem implements IChiselItem, IDynamicallyH
             return currentState;
         }
 
-        // skip if block is fluid
-        if (FluidUtils.isPlayerFacingFluidBlock(playerEntity))
-        {
-            return currentState;
-        }
-
         final IChiselingItem chiselingItem = (IChiselingItem) itemStack.getItem();
         final IChiselMode chiselMode = chiselingItem.getMode(itemStack);
 

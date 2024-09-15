@@ -32,6 +32,9 @@ public class TagGeneratorEventHandler
 
         ModBlockTagGenerator modBlockTags = new ModBlockTagGenerator(packOutput, lookupProvider, existingFileHelper);
         event.getGenerator().addProvider(true, modBlockTags);
-        event.getGenerator().addProvider(true, new ModItemTagGenerator(packOutput, lookupProvider, modBlockTags.contentsGetter(), existingFileHelper));
+        ModItemTagGenerator modItemTags = new ModItemTagGenerator(packOutput, lookupProvider, modBlockTags.contentsGetter(), existingFileHelper);
+        event.getGenerator().addProvider(true, modItemTags);
+        ModFluidTagGenerator modFluidTags = new ModFluidTagGenerator(packOutput, lookupProvider, existingFileHelper);
+        event.getGenerator().addProvider(true, modFluidTags);
     }
 }

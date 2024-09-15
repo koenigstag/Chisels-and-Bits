@@ -71,6 +71,7 @@ import mod.chiselsandbits.stateinfo.additional.StateVariantManager;
 import mod.chiselsandbits.voxelshape.VoxelShapeManager;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -295,9 +296,21 @@ public class ChiselsAndBitsAPI implements IChiselsAndBitsAPI
     }
 
     @Override
+    public @NotNull TagKey<Fluid> getForcedFluidTag()
+    {
+        return ModTags.Fluids.FORCED_CHISELABLE_FLUIDS;
+    }
+
+    @Override
     public @NotNull TagKey<Block> getBlockedTag()
     {
         return ModTags.Blocks.BLOCKED_CHISELABLE;
+    }
+
+    @Override
+    public @NotNull TagKey<Fluid> getBlockedFluidTag()
+    {
+        return ModTags.Fluids.BLOCKED_CHISELABLE_FLUIDS;
     }
 
     @Override

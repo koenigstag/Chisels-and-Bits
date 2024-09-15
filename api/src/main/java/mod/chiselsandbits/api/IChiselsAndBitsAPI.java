@@ -41,6 +41,7 @@ import mod.chiselsandbits.api.variant.state.IStateVariantManager;
 import mod.chiselsandbits.api.voxelshape.IVoxelShapeManager;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -256,11 +257,25 @@ public interface IChiselsAndBitsAPI
     TagKey<Block> getForcedTag();
 
     /**
+     * Returns the tag used in the eligibility system to force compatibility for fluids.
+     * @return The forced compatibility tag for fluids.
+     */
+    @NotNull
+    TagKey<Fluid> getForcedFluidTag();
+
+    /**
      * Returns the tag used in the eligibility system to block compatibility.
      * @return The blocked compatibility tag.
      */
     @NotNull
     TagKey<Block> getBlockedTag();
+
+    /**
+     * Returns the tag used in the eligibility system to block compatibility for fluids.
+     * @return The blocked compatibility tag for fluids.
+     */
+    @NotNull
+    TagKey<Fluid> getBlockedFluidTag();
 
     /**
      * Returns the permission handler which is used to check if a particular area

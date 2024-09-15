@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
@@ -90,6 +91,11 @@ public final class BlockInformation implements IBlockInformation {
     @Override
     public BlockState getBlockState() {
         return blockState;
+    }
+
+    @Override
+    public FluidState getFluidState() {
+        return blockState.getFluidState();
     }
 
     @Override

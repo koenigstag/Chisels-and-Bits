@@ -31,9 +31,15 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import org.jetbrains.annotations.NotNull;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+
 @SuppressWarnings("ConstantConditions")
 public class EligibilityManager implements IEligibilityManager
 {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private static final EligibilityManager INSTANCE = new EligibilityManager();
 
     private static final SimpleMaxSizedCache<IBlockInformation, IEligibilityAnalysisResult> cache =
@@ -62,7 +68,8 @@ public class EligibilityManager implements IEligibilityManager
                 );
             }
 
-            if (blockInformation.getVariant().isPresent()){
+            if (blockInformation.getVariant().isPresent())
+            {
                 return new EligibilityAnalysisResult(
                     true,
                     false,
@@ -70,25 +77,48 @@ public class EligibilityManager implements IEligibilityManager
                 );
             }
 
+            if (blockInformation.isFluid())
+            {
+              if (blockInformation.getFluidState().is(ModTags.Fluids.BLOCKED_CHISELABLE_FLUIDS))
+              {
+                  return new EligibilityAnalysisResult(
+                    false,
+                    false,
+                    TranslationUtils.build(LocalStrings.ChiselSupportTagBlackListed)
+                  );
+              }
+
+              if (blockInformation.getFluidState().is(ModTags.Fluids.FORCED_CHISELABLE_FLUIDS))
+              {
+                  return new EligibilityAnalysisResult(
+                    true,
+                    false,
+                    TranslationUtils.build(LocalStrings.ChiselSupportTagWhitelisted)
+                  );
+              }
+            }
+            else
+            {
+              if (blockInformation.getBlockState().is(ModTags.Blocks.BLOCKED_CHISELABLE))
+              {
+                  return new EligibilityAnalysisResult(
+                    false,
+                    false,
+                    TranslationUtils.build(LocalStrings.ChiselSupportTagBlackListed)
+                  );
+              }
+
+              if (blockInformation.getBlockState().is(ModTags.Blocks.FORCED_CHISELABLE))
+              {
+                  return new EligibilityAnalysisResult(
+                    true,
+                    false,
+                    TranslationUtils.build(LocalStrings.ChiselSupportTagWhitelisted)
+                  );
+              }
+            }
+
             final Block blk = blockInformation.getBlockState().getBlock();
-
-            if (blockInformation.getBlockState().is(ModTags.Blocks.BLOCKED_CHISELABLE))
-            {
-                return new EligibilityAnalysisResult(
-                  false,
-                  false,
-                  TranslationUtils.build(LocalStrings.ChiselSupportTagBlackListed)
-                );
-            }
-
-            if (blockInformation.getBlockState().is(ModTags.Blocks.FORCED_CHISELABLE))
-            {
-                return new EligibilityAnalysisResult(
-                  true,
-                  false,
-                  TranslationUtils.build(LocalStrings.ChiselSupportTagWhitelisted)
-                );
-            }
 
             try
             {
